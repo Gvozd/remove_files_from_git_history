@@ -7,25 +7,25 @@ git reset --hard __qwe
 
 git filter-branch -f --commit-filter '
 	echo "
-		export ORIGIN_TREE=$(git ls-tree $1)
-		export MODIFIED_TREE=$(echo \"$ORIGIN_TREE\" | grep -v -P \"($FILES_TO_DELETE)\")
-		if [[ \"$#\" = \"1\" && \"$MODIFIED_TREE\" != \"\" ]];
+		export ORIGIN_TREE=\$(git ls-tree \$1)
+		export MODIFIED_TREE=\$(echo \"\$ORIGIN_TREE\" | grep -v -P \"(\$FILES_TO_DELETE)\")
+		if [[ \"\$#\" = \"1\" && \"\$MODIFIED_TREE\" != \"\" ]];
 			then
-				git commit-tree `echo \"$(printf \"$MODIFIED_TREE\" | git mktree) ${@:2}\"`
+				git commit-tree \`echo \"\$(printf \"\$MODIFIED_TREE\" | git mktree) \${@:2}\"\`
 				exit 0
 			else
-				for i in `seq 3 2 $#`;
+				for i in \`seq 3 2 \$#\`;
 					do
-						if [ \"$(git ls-tree ${!i})\" != \"$MODIFIED_TREE\" ];
+						if [ \"\$(git ls-tree \${!i})\" != \"\$MODIFIED_TREE\" ];
 							then
-							git commit-tree `echo \"$(printf \"$MODIFIED_TREE\" | git mktree) ${@:2}\"`
+							git commit-tree \`echo \"\$(printf \"\$MODIFIED_TREE\" | git mktree) \${@:2}\"\`
 							exit
 						fi
 					done
 			  
-				for i in `seq 3 2 $#`;
+				for i in \`seq 3 2 \$#\`;
 					do
-						printf \"${!i}\"
+						printf \"\${!i}\"
 					done
 		fi
 	" | /usr/bin/bash
