@@ -6,7 +6,7 @@ export FILES_TO_DELETE="delete.txt"
 git reset --hard __qwe
 
 git filter-branch -f --commit-filter '
-	echo "
+	printf "
 		export ORIGIN_TREE=\$(git ls-tree \$1)
 		export MODIFIED_TREE=\$(echo \"\$ORIGIN_TREE\" | grep -v -P \"(\$FILES_TO_DELETE)\")
 		if [[ \"\$#\" = \"1\" && \"\$MODIFIED_TREE\" != \"\" ]];
