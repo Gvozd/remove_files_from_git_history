@@ -28,6 +28,6 @@ git filter-branch -f --commit-filter '
 						printf \"\${!i}\"
 					done
 		fi
-	" | bash
+	" | bash /dev/stdin $@
 ' HEAD
 
